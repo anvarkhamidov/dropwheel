@@ -9,13 +9,12 @@ import SwiftUI
 @main
 struct DropwheelApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
+    /// Значок можно скрыть в настройках (или вытащить из строки меню с ⌘) — колёса и буфер работают и без него.
+    @AppStorage(SettingsStore.showMenuBarIconKey) private var showMenuBarIcon = true
 
     var body: some Scene {
-        MenuBarExtra("Dropwheel", image: "MenuIcon") {
+        MenuBarExtra("Dropwheel", image: "MenuIcon", isInserted: $showMenuBarIcon) {
             MenuContent(coordinator: delegate.coordinator)
-        }
-        Settings {
-            SettingsView(coordinator: delegate.coordinator)
         }
     }
 }
@@ -30,6 +29,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if DebugHooks.isActive { DebugHooks.run(coordinator); return }
         enableLoginItemOnFirstInstall()
         coordinator.updater.start()
+        coordinator.applyClipboardSettings()
         if !coordinator.settings.onboardingDone { showOnboarding() }
     }
 
@@ -43,6 +43,31 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             coordinator.settings.launchAtLogin = true
         }
         appLog.notice("автозапуск: \(String(describing: SMAppService.mainApp.status), privacy: .public), путь=\(Bundle.main.bundlePath, privacy: .public)")
+    }
+
+    /// Повторный запуск уже открытого приложения (из «Программ», Spotlight, Dock) открывает настройки:
+    /// так до них можно добраться, даже если значок в строке меню скрыт.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        showSettings()
+        return false
+    }
+
+    private var settingsWindow: NSWindow?
+
+    func showSettings() {
+        if settingsWindow == nil {
+            let host = NSHostingController(rootView: SettingsView(coordinator: coordinator))
+            // Окно подстраивает высоту под открытую вкладку.
+            host.sizingOptions = [.preferredContentSize]
+            let window = NSWindow(contentViewController: host)
+            window.title = "Настройки Dropwheel"
+            window.styleMask = [.titled, .closable]
+            window.isReleasedWhenClosed = false
+            window.center()
+            settingsWindow = window
+        }
+        NSApp.activate(ignoringOtherApps: true)
+        settingsWindow?.makeKeyAndOrderFront(nil)
     }
 
     func showOnboarding() {
@@ -85,6 +110,10 @@ struct MenuContent: View {
             Button("Действия…") { coordinator.openWheelFromMenu(kind: .actions) }
         }
         Button("Показать полку") { coordinator.shelf.show() }
+        if s.clipboardEnabled {
+            let key = s.clipboardHotKey == .off ? "" : "  \(s.clipboardHotKey.title)"
+            Button("История буфера обмена\(key)") { coordinator.clipboard.panel.show() }
+        }
         Button("Скопировать последнюю команду") {
             if let cmd = coordinator.jobs.lastCommand { copyToClipboard(cmd) }
         }
@@ -95,7 +124,7 @@ struct MenuContent: View {
             Text("Нет ffmpeg: аудио и видео отключены")
         }
         Divider()
-        SettingsLink { Text("Настройки…") }.keyboardShortcut(",")
+        Button("Настройки…") { (NSApp.delegate as? AppDelegate)?.showSettings() }.keyboardShortcut(",")
         Button("Проверить обновления…") { coordinator.updater.checkForUpdates() }
             .disabled(!coordinator.updater.canCheck)
         Button("Как это работает") { (NSApp.delegate as? AppDelegate)?.showOnboarding() }

@@ -15,11 +15,14 @@ final class Coordinator {
     @ObservationIgnored private(set) var presenter: ToolPresenter!
     @ObservationIgnored private(set) var services: FinderServices!
     @ObservationIgnored private(set) var updater: AppUpdater!
+    let clipboard: ClipboardHistory
 
     private(set) var tools = ExternalTools.discover()
     var registry: Registry { Registry(available: tools.available) }
 
     init() {
+        // В демо-режиме история живёт в отдельной папке, чтобы не трогать настоящую.
+        clipboard = ClipboardHistory(directory: DebugHooks.string("DropwheelClipboardDir").map { URL(fileURLWithPath: $0) })
         wheel = WheelController(registry: { [unowned self] in self.registry })
         progress = ProgressPanelController(center: jobs)
         updater = AppUpdater(isBusy: { [unowned self] in self.jobs.isBusy })
@@ -27,6 +30,7 @@ final class Coordinator {
         jobs.tools = { [unowned self] in self.tools }
         jobs.revealInFinder = { [unowned self] in self.settings.revealInFinder }
         settings.onToolsChanged = { [unowned self] in self.refreshTools() }
+        settings.onClipboardChanged = { [unowned self] in self.applyClipboardSettings() }
         refreshTools()
 
         wheel.onPick = { [unowned self] item, files in self.handle(item, files: files) }
@@ -39,6 +43,11 @@ final class Coordinator {
         if DebugHooks.string("DropwheelNoPrewarm") != "1" {
             DispatchQueue.main.async { [weak self] in self?.wheel.prewarm() }
         }
+    }
+
+    /// Включает слежение за буфером и горячую клавишу по текущим настройкам.
+    func applyClipboardSettings() {
+        clipboard.apply(enabled: settings.clipboardEnabled, limit: settings.clipboardLimit, hotKey: settings.clipboardHotKey)
     }
 
     func refreshTools() {

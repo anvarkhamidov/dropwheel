@@ -44,6 +44,8 @@ Converting a file on a Mac usually means opening an app, finding the export dial
 
 Missed the key? Press <kbd>Esc</kbd> or drop outside the wheel to cancel. The keys can be changed in Settings, and every wheel is also available from the Finder context menu (**Services → Dropwheel**) and from the menu bar.
 
+Press <kbd>⌃⌘V</kbd> anywhere to open your **clipboard history**.
+
 <table>
   <tr>
     <td><img src="docs/tools-wheel.png" alt="Tools wheel for a video file with Trim highlighted"></td>
@@ -81,12 +83,25 @@ Pages, Keynote and Numbers files are supported when those apps are installed.
 
 AirDrop, copy, move, copy path, open in Terminal, and a floating shelf that holds files while you switch windows.
 
+**Clipboard history**
+
+<p align="center">
+  <img src="docs/clipboard-history.png" width="720" alt="Clipboard history panel with recent texts, an image and files">
+</p>
+
+Everything you copy — text, images and files — is kept in a searchable list. Press <kbd>⌃⌘V</kbd>, type to filter, and hit <kbd>↩</kbd> to put an item back on the clipboard, ready to paste with <kbd>⌘V</kbd>. <kbd>⌘1</kbd>–<kbd>⌘9</kbd> pick an item directly, <kbd>⌘P</kbd> pins it so it's never trimmed, <kbd>⌘⌫</kbd> removes it.
+
+- The history stays on your Mac (up to 50–500 items, your choice).
+- Passwords copied from password managers are never saved.
+- The shortcut can be changed or turned off in **Settings → Clipboard**.
+
 **Built for daily use**
 
 - Results never overwrite anything: Dropwheel picks a free name next to the original.
 - Long jobs show progress and can be cancelled.
 - For audio and video, the exact `ffmpeg` command is one click away, so you can tweak it and rerun it in Terminal.
 - Everything runs locally. The only network request is the daily update check.
+- Prefer a clean menu bar? Hide the icon in Settings — the wheels and clipboard history keep working, and opening Dropwheel again brings Settings back.
 
 ## Installation
 

@@ -59,9 +59,19 @@ final class SettingsStore {
     var revealInFinder: Bool { didSet { save("revealInFinder", revealInFinder) } }
     var ffmpegPath: String { didSet { save("ffmpegPath", ffmpegPath); onToolsChanged?() } }
     var onboardingDone: Bool { didSet { save("onboardingDone", onboardingDone) } }
+    var clipboardEnabled: Bool { didSet { save("clipboardEnabled", clipboardEnabled); onClipboardChanged?() } }
+    var clipboardHotKey: ClipboardHotKey { didSet { save("clipboardHotKey", clipboardHotKey.rawValue); onClipboardChanged?() } }
+    var clipboardLimit: Int { didSet { save("clipboardLimit", clipboardLimit); onClipboardChanged?() } }
+
+    /// Варианты размера истории буфера.
+    static let clipboardLimits = [50, 100, 200, 500]
+    /// Ключ в UserDefaults: его же читает @AppStorage у значка в строке меню.
+    static let showMenuBarIconKey = "showMenuBarIcon"
 
     /// Колбэк для пересчёта доступных внешних инструментов.
     @ObservationIgnored var onToolsChanged: (() -> Void)?
+    /// Колбэк для применения настроек истории буфера.
+    @ObservationIgnored var onClipboardChanged: (() -> Void)?
 
     init() {
         convertKey = TriggerKey(rawValue: defaults.string(forKey: "convertKey") ?? "") ?? .shift
@@ -71,6 +81,9 @@ final class SettingsStore {
         revealInFinder = defaults.object(forKey: "revealInFinder") as? Bool ?? true
         ffmpegPath = defaults.string(forKey: "ffmpegPath") ?? ""
         onboardingDone = defaults.bool(forKey: "onboardingDone")
+        clipboardEnabled = defaults.object(forKey: "clipboardEnabled") as? Bool ?? true
+        clipboardHotKey = ClipboardHotKey(rawValue: defaults.string(forKey: "clipboardHotKey") ?? "") ?? .controlCommandV
+        clipboardLimit = defaults.object(forKey: "clipboardLimit") as? Int ?? 200
     }
 
     private func save(_ key: String, _ value: Any) { defaults.set(value, forKey: key) }

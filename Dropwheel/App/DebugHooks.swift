@@ -94,7 +94,22 @@ enum DebugHooks {
             }
             target = { NSApp.windows.first { $0 is WheelPanel && $0.isVisible } }
         }
-        // -DropwheelDemoSettings general|updates|tools — окно настроек на этой вкладке (проверка высоты).
+        // -DropwheelClipboardSelfTest 1 — запись в историю через отдельный буфер: текст, файлы, картинка, пароль.
+        if string("DropwheelClipboardSelfTest") == "1" { clipboardSelfTest(files: files); return }
+        // -DropwheelDemoClipboard 1 — панель истории буфера (вместе с -DropwheelClipboardDir — своя папка с демо-записями).
+        if string("DropwheelDemoClipboard") == "1" {
+            if string("DropwheelClipboardSeed") == "1" { seedClipboard(c.clipboard, files: files) }
+            c.clipboard.apply(enabled: true, limit: 200, hotKey: .off)
+            let screenCenter = NSScreen.main.map { NSPoint(x: $0.frame.midX, y: $0.frame.midY) } ?? .zero
+            if let bg = string("DropwheelBackdrop") { showBackdrop(bg, at: screenCenter) }
+            c.clipboard.panel.show()
+            if let panel = NSApp.windows.first(where: { $0 is ClipboardPanel }) {
+                // Для снимка — по центру фона.
+                panel.setFrameOrigin(NSPoint(x: screenCenter.x - panel.frame.width / 2, y: screenCenter.y - panel.frame.height / 2))
+            }
+            target = { NSApp.windows.first { $0 is ClipboardPanel && $0.isVisible } }
+        }
+        // -DropwheelDemoSettings general|clipboard|updates|tools — окно настроек на этой вкладке (проверка высоты).
         if let raw = string("DropwheelDemoSettings"), let tab = SettingsView.Tab(rawValue: raw) {
             let w = NSWindow(contentViewController: NSHostingController(rootView: SettingsView(coordinator: c, tab: tab)))
             w.title = "Dropwheel Settings"
@@ -137,6 +152,66 @@ enum DebugHooks {
         }
     }
 
+    static func clipboardSelfTest(files: [URL]) {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("dropwheel-selftest-\(UUID().uuidString)")
+        let pb = NSPasteboard(name: NSPasteboard.Name("local.dropwheel.selftest"))
+        let history = ClipboardHistory(directory: dir, pasteboard: pb)
+        history.apply(enabled: true, limit: 200, hotKey: .off)
+        var steps: [(String, () -> Void)] = [
+            ("text", { pb.clearContents(); pb.setString("Hello from self-test", forType: .string) }),
+            ("files", { pb.clearContents(); pb.writeObjects(files.map { $0 as NSURL }) }),
+            ("password", {
+                pb.clearContents()
+                pb.declareTypes([.string, NSPasteboard.PasteboardType("org.nspasteboard.ConcealedType")], owner: nil)
+                pb.setString("hunter2", forType: .string)
+                pb.setString("", forType: NSPasteboard.PasteboardType("org.nspasteboard.ConcealedType"))
+            }),
+        ]
+        if let img = files.first.flatMap({ NSImage(contentsOf: $0) })?.tiffRepresentation {
+            steps.append(("image", { pb.clearContents(); pb.setData(img, forType: .tiff) }))
+        }
+        steps.append(("duplicate text", { pb.clearContents(); pb.setString("Hello from self-test", forType: .string) }))
+        for (name, step) in steps {
+            step()
+            history.poll()
+            RunLoop.main.run(until: Date().addingTimeInterval(0.8)) // картинка кодируется в фоне
+            gestureLog.notice("selftest: после \(name, privacy: .public): \(history.items.map { "\($0.kind.rawValue):\($0.title)" }.joined(separator: " | "), privacy: .public)")
+        }
+        // Возврат записи в буфер не должен порождать новую запись.
+        if let files = history.items.first(where: { $0.kind == .files }) {
+            history.copy(files)
+            history.poll()
+        }
+        let kinds = history.items.map(\.kind.rawValue)
+        let leaked = history.items.contains { $0.text == "hunter2" }
+        let ok = !leaked && kinds.count == (steps.count - 2) && history.items.first?.kind == .files
+        gestureLog.notice("selftest: итог \(ok ? "OK" : "FAIL", privacy: .public) порядок=\(kinds.joined(separator: ","), privacy: .public) пароль_сохранён=\(leaked, privacy: .public)")
+        pb.releaseGlobally()
+        try? FileManager.default.removeItem(at: dir)
+        NSApp.terminate(nil)
+    }
+
+    /// Демо-записи для снимка панели истории: тексты, картинка и файлы из -DropwheelDemoFiles.
+    static func seedClipboard(_ history: ClipboardHistory, files: [URL]) {
+        let store = history.store
+        store.clear(keepPinned: false)
+        let now = Date()
+        func ago(_ minutes: Double) -> Date { now.addingTimeInterval(-minutes * 60) }
+        store.addText("Flight SK 4012 · Bergen → Leknes, departs 08:15", source: ("com.apple.mail", "Mail"), date: ago(180))
+        store.addText("brew install ffmpeg webp", source: ("com.apple.Terminal", "Terminal"), date: ago(95))
+        let docs = files.filter { ["pdf", "mp4"].contains($0.pathExtension.lowercased()) }
+        if !docs.isEmpty { store.addFiles(docs, source: ("com.apple.finder", "Finder"), date: ago(42)) }
+        if let photo = files.first(where: { ["heic", "jpg", "png"].contains($0.pathExtension.lowercased()) }),
+           let rep = NSImage(contentsOf: photo).flatMap({ $0.tiffRepresentation }).flatMap(NSBitmapImageRep.init(data:)),
+           let png = rep.representation(using: .png, properties: [:]) {
+            store.addImage(png: png, width: rep.pixelsWide, height: rep.pixelsHigh, source: ("com.apple.Preview", "Preview"), date: ago(12))
+        }
+        store.addText("Reine at dawn. Hike to Reinebringen if the weather holds — start before 6, the trail gets busy.",
+                      source: ("com.apple.Notes", "Notes"), date: ago(4))
+        store.addText("https://example.com/norway/lofoten-ferry-timetable", source: ("com.apple.Safari", "Safari"), date: ago(1))
+        if let flight = store.items.first(where: { $0.text?.hasPrefix("Flight") == true }) { store.togglePin(flight.id) }
+    }
+
     static var backdrop: NSWindow?
 
     static func showBackdrop(_ imagePath: String, at center: NSPoint) {
@@ -145,7 +220,8 @@ enum DebugHooks {
         let size = image.map { $0.size.width > 0 ? $0.size : NSSize(width: 440, height: 440) } ?? NSSize(width: 440, height: 440)
         let w = NSWindow(contentRect: NSRect(x: center.x - size.width / 2, y: center.y - size.height / 2, width: size.width, height: size.height),
                          styleMask: .borderless, backing: .buffered, defer: false)
-        w.level = .floating // ниже панели колеса (.popUpMenu)
+        // Сразу под панелями колеса и буфера (.popUpMenu): выше окон «поверх всех» других приложений.
+        w.level = NSWindow.Level(rawValue: NSWindow.Level.popUpMenu.rawValue - 1)
         w.hasShadow = false
         w.isReleasedWhenClosed = false
         // Непрозрачный белый фон: в скруглённых углах снимка окна не просвечивает чужой экран.
@@ -161,6 +237,23 @@ enum DebugHooks {
     /// screencapture ждёт координаты с началом в левом верхнем углу главного экрана.
     static func captureScreen(of frame: NSRect, to path: String) {
         let height = NSScreen.screens.first?.frame.height ?? 0
+        // Снимаем только если в этой области над нашим фоном нет ни одного чужого окна:
+        // иначе в кадр попадёт содержимое других приложений.
+        guard let backdrop, backdrop.isVisible else { NSLog("Dropwheel: фона нет на экране — снимок отменён"); return }
+        let area = CGRect(x: frame.minX, y: height - frame.maxY, width: frame.width, height: frame.height)
+        let above = CGWindowListCopyWindowInfo([.optionOnScreenAboveWindow], CGWindowID(backdrop.windowNumber)) as? [[String: Any]] ?? []
+        let pid = ProcessInfo.processInfo.processIdentifier
+        let foreign = above.filter { info in
+            guard (info[kCGWindowOwnerPID as String] as? Int32) != pid,
+                  let b = info[kCGWindowBounds as String] as? NSDictionary,
+                  let bounds = CGRect(dictionaryRepresentation: b) else { return false }
+            return bounds.intersects(area)
+        }
+        guard foreign.isEmpty else {
+            let owners = foreign.compactMap { $0[kCGWindowOwnerName as String] as? String }
+            NSLog("Dropwheel: над фоном чужие окна (\(owners.joined(separator: ", "))) — снимок отменён")
+            return
+        }
         let rect = "\(Int(frame.minX)),\(Int(height - frame.maxY)),\(Int(frame.width)),\(Int(frame.height))"
         let p = Process()
         p.executableURL = URL(fileURLWithPath: "/usr/sbin/screencapture")

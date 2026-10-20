@@ -81,6 +81,13 @@ enum Tokens {
         static let windowSize: CGFloat = 340
     }
 
+    enum Clipboard {
+        static let width: CGFloat = 560
+        static let height: CGFloat = 460
+        static let rowHeight: CGFloat = 48
+        static let thumb: CGFloat = 32
+    }
+
     enum Motion {
         // Колесо открывается клавишей десятки раз в день: появление почти незаметное, выход ещё быстрее.
         static let appear = Animation.timingCurve(0.23, 1, 0.32, 1, duration: 0.14)

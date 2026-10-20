@@ -4,7 +4,7 @@ import SwiftUI
 /// Настройки по вкладкам, как в системных приложениях: одним списком окно выходило выше экрана.
 /// Окно подстраивает высоту под открытую вкладку.
 struct SettingsView: View {
-    enum Tab: String, CaseIterable { case general, updates, tools }
+    enum Tab: String, CaseIterable { case general, clipboard, updates, tools }
 
     @Bindable var settings: SettingsStore
     let coordinator: Coordinator
@@ -12,6 +12,8 @@ struct SettingsView: View {
     @State private var launchAtLogin: Bool
     @State private var autoCheck: Bool
     @State private var autoInstall: Bool
+    @State private var confirmClear = false
+    @AppStorage(SettingsStore.showMenuBarIconKey) private var showMenuBarIcon = true
 
     init(coordinator: Coordinator, tab: Tab = .general) {
         self.coordinator = coordinator
@@ -27,6 +29,9 @@ struct SettingsView: View {
             page { general }
                 .tabItem { Label("Основные", systemImage: "gearshape") }
                 .tag(Tab.general)
+            page { clipboard }
+                .tabItem { Label("Буфер обмена", systemImage: "list.clipboard") }
+                .tag(Tab.clipboard)
             page { updates }
                 .tabItem { Label("Обновления", systemImage: "arrow.triangle.2.circlepath") }
                 .tag(Tab.updates)
@@ -57,13 +62,49 @@ struct SettingsView: View {
                 .font(Tokens.Font.caption)
                 .foregroundStyle(Tokens.Palette.textMuted)
         }
-        Section("Поведение") {
+        Section {
+            Toggle("Показывать значок в строке меню", isOn: $showMenuBarIcon)
             Toggle("Показывать результат в Finder", isOn: $settings.revealInFinder)
             Toggle("Запускать при входе в систему", isOn: $launchAtLogin)
                 .onChange(of: launchAtLogin) { _, v in settings.launchAtLogin = v }
             Picker("Терминал для действия TERMINAL", selection: $settings.terminalApp) {
                 ForEach(TerminalApp.allCases) { Text($0.title).tag($0) }
             }
+        } header: {
+            Text("Поведение")
+        } footer: {
+            if !showMenuBarIcon {
+                Text("Колёса и история буфера работают и без значка. Чтобы вернуться в настройки, откройте Dropwheel ещё раз — из «Программ» или через Spotlight.")
+                    .font(Tokens.Font.caption)
+                    .foregroundStyle(Tokens.Palette.textMuted)
+            }
+        }
+    }
+
+    @ViewBuilder private var clipboard: some View {
+        Section {
+            Toggle("Сохранять историю буфера обмена", isOn: $settings.clipboardEnabled)
+            Picker("Открыть историю", selection: $settings.clipboardHotKey) {
+                ForEach(ClipboardHotKey.allCases) { Text($0.title).tag($0) }
+            }
+            .disabled(!settings.clipboardEnabled)
+            Picker("Хранить записей", selection: $settings.clipboardLimit) {
+                ForEach(SettingsStore.clipboardLimits, id: \.self) { Text("\($0)").tag($0) }
+            }
+            .disabled(!settings.clipboardEnabled)
+            LabeledContent("Сейчас в истории: \(coordinator.clipboard.items.count)") {
+                Button("Очистить…") { confirmClear = true }
+                    .disabled(coordinator.clipboard.items.isEmpty)
+            }
+        } footer: {
+            Text("История хранится только на этом Mac. Пароли из менеджеров паролей не сохраняются. Закреплённые записи не удаляются ни по лимиту, ни при очистке.")
+                .font(Tokens.Font.caption)
+                .foregroundStyle(Tokens.Palette.textMuted)
+        }
+        .confirmationDialog("Очистить историю буфера обмена?", isPresented: $confirmClear) {
+            Button("Очистить", role: .destructive) { coordinator.clipboard.clear() }
+        } message: {
+            Text("Закреплённые записи останутся.")
         }
     }
 

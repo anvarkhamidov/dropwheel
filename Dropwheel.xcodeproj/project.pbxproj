@@ -12,6 +12,7 @@
 		273EC50EE27B26D09B5B363A /* FileActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CBEFB97259CCBC832BD87 /* FileActions.swift */; };
 		293DB8EFB1BABF55AECC0F2F /* ToolChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6F3A956B95780FC6A618CA /* ToolChrome.swift */; };
 		29B1E6EF0C75664AF9C6DDCB /* WheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293808EB4A7E549A032253E9 /* WheelView.swift */; };
+		463B562E94F5E05A1F2861C0 /* ClipboardHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25673A5964D95A2FC01E97AE /* ClipboardHistory.swift */; };
 		4B57DDE08D88147B92C09097 /* ToolPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DA2A060A4B994719CEAC /* ToolPresenter.swift */; };
 		56F154420F3D95323721E4E7 /* DropwheelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15971EE4AA81131D4E80BD9 /* DropwheelApp.swift */; };
 		578D8E09A1A05EDCD387999B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0BA8DB3E5C314A0821500 /* SettingsView.swift */; };
@@ -19,6 +20,7 @@
 		72D68ED2BED6B8620DF18C85 /* MediaToolsUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F408CD8B6A7448760805C24 /* MediaToolsUI.swift */; };
 		8FE7756DAD6E6FC37087CD90 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3771D33EB8AB3FD768AFE81F /* Tokens.swift */; };
 		91FC6BE931CE1320FE4174D4 /* JobCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA8F7213E992AC7E4E42314 /* JobCenter.swift */; };
+		9E43C5E645C4E98A1892B59A /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938556D5A25E69291598DDE7 /* GlobalHotKey.swift */; };
 		9EDEBBCE2CFD46C445F75BBF /* FinderServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BFB751A8BA2498B100E503 /* FinderServices.swift */; };
 		A3F15A06B56FAA9355CC8DAE /* DropwheelCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7BF981E11A6D63E724D1D8BA /* DropwheelCore */; };
 		A7EB07BBBCA87C84B7B6EAFD /* WheelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D7934A0F6211BBDDDB53E5 /* WheelController.swift */; };
@@ -27,6 +29,7 @@
 		AE3E9BC021E292BB5DD24105 /* ProgressPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0FCD1DBD2C290AD7407C8C /* ProgressPanel.swift */; };
 		BD9BFCF5630BB31A3EA04C04 /* PDFToolsUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB8854F4F0211DB96F4F31E /* PDFToolsUI.swift */; };
 		CDCDEB17BDC8EAD5EE78D79F /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07ED1888946B3919A6CB5B1A /* AppUpdater.swift */; };
+		D488F2CFC4CB2DA4D69D022E /* ClipboardPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F375B90126647A6B560028 /* ClipboardPanel.swift */; };
 		DB9B0825B398CC340CE0A740 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = BB74A253526A9B7E0D9A67F8 /* Sparkle */; };
 		E4946FD6CC2F7F0BE249F130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03BB5A0469959167857913F7 /* Assets.xcassets */; };
 		E5B88D6F89D6BE27790CB8AD /* FloatShelf.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0D49A4B249055A78E43D1 /* FloatShelf.swift */; };
@@ -41,8 +44,10 @@
 		0DC957458F66F636E077D198 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		12BFB751A8BA2498B100E503 /* FinderServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderServices.swift; sourceTree = "<group>"; };
 		151D230AF6959F846FB3D39E /* ImageTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTools.swift; sourceTree = "<group>"; };
+		25673A5964D95A2FC01E97AE /* ClipboardHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardHistory.swift; sourceTree = "<group>"; };
 		293808EB4A7E549A032253E9 /* WheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelView.swift; sourceTree = "<group>"; };
 		2FB0BA8DB3E5C314A0821500 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		31F375B90126647A6B560028 /* ClipboardPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPanel.swift; sourceTree = "<group>"; };
 		3771D33EB8AB3FD768AFE81F /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
 		38EA3E70B433AFEDAF13B6DA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		3F408CD8B6A7448760805C24 /* MediaToolsUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaToolsUI.swift; sourceTree = "<group>"; };
@@ -55,6 +60,7 @@
 		75CE694AED04BE4A36778F39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7F6F3A956B95780FC6A618CA /* ToolChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolChrome.swift; sourceTree = "<group>"; };
 		91ADF422172149694426A5CE /* DebugHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugHooks.swift; sourceTree = "<group>"; };
+		938556D5A25E69291598DDE7 /* GlobalHotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKey.swift; sourceTree = "<group>"; };
 		9EB8854F4F0211DB96F4F31E /* PDFToolsUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFToolsUI.swift; sourceTree = "<group>"; };
 		ABB000F10E81129CB0FF8A3D /* Dropwheel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dropwheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B15971EE4AA81131D4E80BD9 /* DropwheelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropwheelApp.swift; sourceTree = "<group>"; };
@@ -103,6 +109,16 @@
 				12BFB751A8BA2498B100E503 /* FinderServices.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		41EA1BF84980D5F8FBDA1CBE /* Clipboard */ = {
+			isa = PBXGroup;
+			children = (
+				25673A5964D95A2FC01E97AE /* ClipboardHistory.swift */,
+				31F375B90126647A6B560028 /* ClipboardPanel.swift */,
+				938556D5A25E69291598DDE7 /* GlobalHotKey.swift */,
+			);
+			path = Clipboard;
 			sourceTree = "<group>";
 		};
 		51F0180EE542C17EBDE425EC /* Settings */ = {
@@ -188,6 +204,7 @@
 				75CE694AED04BE4A36778F39 /* Info.plist */,
 				585C049800AB4ACD1AAD23EF /* Actions */,
 				22645A8695A5ABE450A45BC4 /* App */,
+				41EA1BF84980D5F8FBDA1CBE /* Clipboard */,
 				B006EE7AE2AB95BB4A1FC385 /* Design */,
 				BF963BD854F1B3DF251F223E /* Gesture */,
 				89FFCA0735727AC15558EE14 /* Jobs */,
@@ -276,6 +293,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDCDEB17BDC8EAD5EE78D79F /* AppUpdater.swift in Sources */,
+				463B562E94F5E05A1F2861C0 /* ClipboardHistory.swift in Sources */,
+				D488F2CFC4CB2DA4D69D022E /* ClipboardPanel.swift in Sources */,
 				6A492401B961A4D98F39763F /* CommonTools.swift in Sources */,
 				F709AAD824F7B5747D39D560 /* Coordinator.swift in Sources */,
 				AC7B34E299CC4030EF712B04 /* DebugHooks.swift in Sources */,
@@ -284,6 +303,7 @@
 				273EC50EE27B26D09B5B363A /* FileActions.swift in Sources */,
 				9EDEBBCE2CFD46C445F75BBF /* FinderServices.swift in Sources */,
 				E5B88D6F89D6BE27790CB8AD /* FloatShelf.swift in Sources */,
+				9E43C5E645C4E98A1892B59A /* GlobalHotKey.swift in Sources */,
 				F122DAE680B85DDAEF21FE71 /* ImageTools.swift in Sources */,
 				91FC6BE931CE1320FE4174D4 /* JobCenter.swift in Sources */,
 				72D68ED2BED6B8620DF18C85 /* MediaToolsUI.swift in Sources */,
@@ -309,7 +329,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dropwheel/Dropwheel.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				ENABLE_APP_SANDBOX = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Dropwheel/Info.plist;
@@ -464,7 +484,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Dropwheel/Dropwheel.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				ENABLE_APP_SANDBOX = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Dropwheel/Info.plist;
