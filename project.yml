@@ -1,0 +1,88 @@
+name: Dropwheel
+options:
+  bundleIdPrefix: local.dropwheel
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+packages:
+  DropwheelCore:
+    path: DropwheelCore
+  # Обновления по воздуху: лента appcast.xml и сборки в GitHub Releases.
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: 2.6.0
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: YES
+    OTHER_SWIFT_FLAGS: "-enable-upcoming-feature BareSlashRegexLiterals"
+    # Universal: Apple silicon и Intel.
+    ARCHS: "$(ARCHS_STANDARD)"
+  configs:
+    Release:
+      ONLY_ACTIVE_ARCH: NO
+      # Раздача вне App Store: Developer ID + нотаризация (Debug остаётся ad-hoc).
+      CODE_SIGN_IDENTITY: "Developer ID Application"
+      DEVELOPMENT_TEAM: 27G8CZPDWA
+      OTHER_CODE_SIGN_FLAGS: "--timestamp"
+      # Иначе xcodebuild build добавляет get-task-allow, и нотаризация отклоняет сборку.
+      CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
+targets:
+  Dropwheel:
+    type: application
+    platform: macOS
+    sources:
+      - path: Dropwheel
+    dependencies:
+      - package: DropwheelCore
+      - package: Sparkle
+    info:
+      path: Dropwheel/Info.plist
+      properties:
+        CFBundleDisplayName: Dropwheel
+        CFBundleName: Dropwheel
+        # Номера версий — в настройках MARKETING_VERSION и CURRENT_PROJECT_VERSION ниже.
+        # Sparkle сравнивает CFBundleVersion: на каждый релиз его нужно увеличивать.
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        SUFeedURL: "https://github.com/anvarkhamidov/dropwheel/releases/latest/download/appcast.xml"
+        SUPublicEDKey: "rwKlhVICvKKcXWSROZ2105kn9FnEZTYuXZiml7WgRv8="
+        # Проверять раз в сутки без вопроса при втором запуске и ставить обновления самим.
+        SUEnableAutomaticChecks: true
+        SUAutomaticallyUpdate: true
+        SUScheduledCheckInterval: 86400
+        LSUIElement: true
+        LSMinimumSystemVersion: "14.0"
+        NSAppleEventsUsageDescription: "Dropwheel открывает Pages, Keynote и Numbers, чтобы конвертировать их форматы."
+        NSHumanReadableCopyright: "Личная сборка"
+        # Быстрые действия Finder: правый клик по файлам → колесо у курсора.
+        NSServices:
+          - NSMenuItem: { default: "Dropwheel: форматы" }
+            NSMessage: openConvertWheel
+            NSPortName: Dropwheel
+            NSSendFileTypes: [public.item]
+            NSRequiredContext: {}
+          - NSMenuItem: { default: "Dropwheel: инструменты" }
+            NSMessage: openToolsWheel
+            NSPortName: Dropwheel
+            NSSendFileTypes: [public.item]
+            NSRequiredContext: {}
+          - NSMenuItem: { default: "Dropwheel: действия" }
+            NSMessage: openActionsWheel
+            NSPortName: Dropwheel
+            NSSendFileTypes: [public.item]
+            NSRequiredContext: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.dropwheel.app
+        PRODUCT_NAME: Dropwheel
+        MARKETING_VERSION: "0.2.1"
+        CURRENT_PROJECT_VERSION: "3"
+        ENABLE_APP_SANDBOX: NO
+        GENERATE_INFOPLIST_FILE: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        CODE_SIGN_ENTITLEMENTS: Dropwheel/Dropwheel.entitlements

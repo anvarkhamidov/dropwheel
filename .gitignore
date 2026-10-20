@@ -1,0 +1,10 @@
+.DS_Store
+build/
+DerivedData/
+.build/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+dist/
+
+# Исследование и рабочие материалы — только локально, в публичный репозиторий не идут.
+replica/
