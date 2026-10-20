@@ -1,4 +1,5 @@
 import AppKit
+import SwiftUI
 import DropwheelCore
 
 /// Флаги запуска для проверки без мыши (только Debug):
@@ -92,6 +93,14 @@ enum DebugHooks {
                 }
             }
             target = { NSApp.windows.first { $0 is WheelPanel && $0.isVisible } }
+        }
+        // -DropwheelDemoSettings general|updates|tools — окно настроек на этой вкладке (проверка высоты).
+        if let raw = string("DropwheelDemoSettings"), let tab = SettingsView.Tab(rawValue: raw) {
+            let w = NSWindow(contentViewController: NSHostingController(rootView: SettingsView(coordinator: c, tab: tab)))
+            w.title = "Dropwheel Settings"
+            w.center()
+            w.makeKeyAndOrderFront(nil)
+            target = { w }
         }
         if let toolID = string("DropwheelDemoTool"),
            let tool = c.registry.tools(for: files).first(where: { $0.id == toolID }) {

@@ -1,76 +1,108 @@
 import DropwheelCore
 import SwiftUI
 
+/// Настройки по вкладкам, как в системных приложениях: одним списком окно выходило выше экрана.
+/// Окно подстраивает высоту под открытую вкладку.
 struct SettingsView: View {
+    enum Tab: String, CaseIterable { case general, updates, tools }
+
     @Bindable var settings: SettingsStore
     let coordinator: Coordinator
+    @State private var tab: Tab
     @State private var launchAtLogin: Bool
     @State private var autoCheck: Bool
     @State private var autoInstall: Bool
 
-    init(coordinator: Coordinator) {
+    init(coordinator: Coordinator, tab: Tab = .general) {
         self.coordinator = coordinator
         self.settings = coordinator.settings
+        _tab = State(initialValue: tab)
         _launchAtLogin = State(initialValue: coordinator.settings.launchAtLogin)
         _autoCheck = State(initialValue: coordinator.updater.automaticallyChecks)
         _autoInstall = State(initialValue: coordinator.updater.automaticallyInstalls)
     }
 
     var body: some View {
-        Form {
-            Section("Клавиши колёс") {
-                Picker("Форматы", selection: $settings.convertKey) { keyOptions }
-                Picker("Инструменты", selection: $settings.toolsKey) { keyOptions }
-                Picker("Действия", selection: $settings.actionsKey) { keyOptions }
-                if settings.hasConflict {
-                    Label("У двух колёс одна клавиша — одно из них не откроется", systemImage: "exclamationmark.triangle.fill")
-                        .foregroundStyle(Tokens.Palette.warning)
-                        .font(Tokens.Font.caption)
-                }
-                Text("Начните тянуть файл и коротко нажмите клавишу. Держать её не нужно: колесо открыто, пока вы не отпустите файл.")
+        TabView(selection: $tab) {
+            page { general }
+                .tabItem { Label("Основные", systemImage: "gearshape") }
+                .tag(Tab.general)
+            page { updates }
+                .tabItem { Label("Обновления", systemImage: "arrow.triangle.2.circlepath") }
+                .tag(Tab.updates)
+            page { tools }
+                .tabItem { Label("Инструменты", systemImage: "wrench.and.screwdriver") }
+                .tag(Tab.tools)
+        }
+    }
+
+    private func page(@ViewBuilder _ content: () -> some View) -> some View {
+        Form { content() }
+            .formStyle(.grouped)
+            .frame(width: 480)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    @ViewBuilder private var general: some View {
+        Section("Клавиши колёс") {
+            Picker("Форматы", selection: $settings.convertKey) { keyOptions }
+            Picker("Инструменты", selection: $settings.toolsKey) { keyOptions }
+            Picker("Действия", selection: $settings.actionsKey) { keyOptions }
+            if settings.hasConflict {
+                Label("У двух колёс одна клавиша — одно из них не откроется", systemImage: "exclamationmark.triangle.fill")
+                    .foregroundStyle(Tokens.Palette.warning)
                     .font(Tokens.Font.caption)
-                    .foregroundStyle(Tokens.Palette.textMuted)
             }
-            Section("Поведение") {
-                Toggle("Показывать результат в Finder", isOn: $settings.revealInFinder)
-                Toggle("Запускать при входе в систему", isOn: $launchAtLogin)
-                    .onChange(of: launchAtLogin) { _, v in settings.launchAtLogin = v }
-                Picker("Терминал для действия TERMINAL", selection: $settings.terminalApp) {
-                    ForEach(TerminalApp.allCases) { Text($0.title).tag($0) }
-                }
-            }
-            Section("Обновления") {
-                Toggle("Проверять обновления раз в день", isOn: $autoCheck)
-                    .onChange(of: autoCheck) { _, v in coordinator.updater.automaticallyChecks = v }
-                Toggle("Устанавливать автоматически", isOn: $autoInstall)
-                    .onChange(of: autoInstall) { _, v in coordinator.updater.automaticallyInstalls = v }
-                    .disabled(!autoCheck)
-                LabeledContent("Версия \(Bundle.main.shortVersion)") {
-                    Button("Проверить сейчас") { coordinator.updater.checkForUpdates() }
-                        .disabled(!coordinator.updater.canCheck)
-                }
-                Text("Новая версия ставится, когда нет активных задач: приложение перезапустится само за секунду.")
-                    .font(Tokens.Font.caption)
-                    .foregroundStyle(Tokens.Palette.textMuted)
-            }
-            Section("Внешние инструменты") {
-                ToolStatusRow(name: "ffmpeg", detail: "аудио и видео", path: coordinator.tools.ffmpeg?.path)
-                ToolStatusRow(name: "cwebp", detail: "запись WebP", path: coordinator.tools.cwebp?.path)
-                ToolStatusRow(name: "Pages", detail: "формат .pages", path: coordinator.tools.available.contains(.pages) ? "установлен" : nil)
-                ToolStatusRow(name: "Keynote", detail: "PPT/PPTX в PDF и картинки", path: coordinator.tools.available.contains(.keynote) ? "установлен" : nil)
-                ToolStatusRow(name: "Numbers", detail: "чтение XLS", path: coordinator.tools.available.contains(.numbers) ? "установлен" : nil)
-                TextField("Свой путь к ffmpeg", text: $settings.ffmpegPath, prompt: Text("/opt/homebrew/bin/ffmpeg"))
-                if coordinator.tools.ffmpeg == nil || coordinator.tools.cwebp == nil {
-                    Text("Установить недостающее: brew install ffmpeg webp")
-                        .font(Tokens.Font.mono)
-                        .textSelection(.enabled)
-                        .foregroundStyle(Tokens.Palette.textMuted)
-                }
+            Text("Начните тянуть файл и коротко нажмите клавишу. Держать её не нужно: колесо открыто, пока вы не отпустите файл.")
+                .font(Tokens.Font.caption)
+                .foregroundStyle(Tokens.Palette.textMuted)
+        }
+        Section("Поведение") {
+            Toggle("Показывать результат в Finder", isOn: $settings.revealInFinder)
+            Toggle("Запускать при входе в систему", isOn: $launchAtLogin)
+                .onChange(of: launchAtLogin) { _, v in settings.launchAtLogin = v }
+            Picker("Терминал для действия TERMINAL", selection: $settings.terminalApp) {
+                ForEach(TerminalApp.allCases) { Text($0.title).tag($0) }
             }
         }
-        .formStyle(.grouped)
-        .frame(width: 480)
-        .fixedSize(horizontal: false, vertical: true)
+    }
+
+    @ViewBuilder private var updates: some View {
+        Section {
+            Toggle("Проверять обновления раз в день", isOn: $autoCheck)
+                .onChange(of: autoCheck) { _, v in coordinator.updater.automaticallyChecks = v }
+            Toggle("Устанавливать автоматически", isOn: $autoInstall)
+                .onChange(of: autoInstall) { _, v in coordinator.updater.automaticallyInstalls = v }
+                .disabled(!autoCheck)
+            LabeledContent("Версия \(Bundle.main.shortVersion)") {
+                Button("Проверить сейчас") { coordinator.updater.checkForUpdates() }
+                    .disabled(!coordinator.updater.canCheck)
+            }
+        } footer: {
+            Text("Новая версия ставится, когда нет активных задач: приложение перезапустится само за секунду.")
+                .font(Tokens.Font.caption)
+                .foregroundStyle(Tokens.Palette.textMuted)
+        }
+    }
+
+    @ViewBuilder private var tools: some View {
+        Section {
+            ToolStatusRow(name: "ffmpeg", detail: "аудио и видео", path: coordinator.tools.ffmpeg?.path)
+            ToolStatusRow(name: "cwebp", detail: "запись WebP", path: coordinator.tools.cwebp?.path)
+            ToolStatusRow(name: "Pages", detail: "формат .pages", path: coordinator.tools.available.contains(.pages) ? "установлен" : nil)
+            ToolStatusRow(name: "Keynote", detail: "PPT/PPTX в PDF и картинки", path: coordinator.tools.available.contains(.keynote) ? "установлен" : nil)
+            ToolStatusRow(name: "Numbers", detail: "чтение XLS", path: coordinator.tools.available.contains(.numbers) ? "установлен" : nil)
+        }
+        Section {
+            TextField("Свой путь к ffmpeg", text: $settings.ffmpegPath, prompt: Text("/opt/homebrew/bin/ffmpeg"))
+        } footer: {
+            if coordinator.tools.ffmpeg == nil || coordinator.tools.cwebp == nil {
+                Text("Установить недостающее: brew install ffmpeg webp")
+                    .font(Tokens.Font.mono)
+                    .textSelection(.enabled)
+                    .foregroundStyle(Tokens.Palette.textMuted)
+            }
+        }
     }
 
     @ViewBuilder private var keyOptions: some View {
