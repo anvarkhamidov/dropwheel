@@ -1,0 +1,536 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		09A0EADEA92AD3C28377F554 /* DragWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62408F05E3A9F2F606CD72BB /* DragWatcher.swift */; };
+		19925BC9694132359FFD423E /* WheelGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF4774F2D82E70076893D8B /* WheelGeometry.swift */; };
+		273EC50EE27B26D09B5B363A /* FileActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CBEFB97259CCBC832BD87 /* FileActions.swift */; };
+		293DB8EFB1BABF55AECC0F2F /* ToolChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6F3A956B95780FC6A618CA /* ToolChrome.swift */; };
+		29B1E6EF0C75664AF9C6DDCB /* WheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293808EB4A7E549A032253E9 /* WheelView.swift */; };
+		4B57DDE08D88147B92C09097 /* ToolPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DA2A060A4B994719CEAC /* ToolPresenter.swift */; };
+		56F154420F3D95323721E4E7 /* DropwheelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15971EE4AA81131D4E80BD9 /* DropwheelApp.swift */; };
+		578D8E09A1A05EDCD387999B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0BA8DB3E5C314A0821500 /* SettingsView.swift */; };
+		6A492401B961A4D98F39763F /* CommonTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676730B2969DA896E13A8BC /* CommonTools.swift */; };
+		72D68ED2BED6B8620DF18C85 /* MediaToolsUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F408CD8B6A7448760805C24 /* MediaToolsUI.swift */; };
+		8FE7756DAD6E6FC37087CD90 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3771D33EB8AB3FD768AFE81F /* Tokens.swift */; };
+		91FC6BE931CE1320FE4174D4 /* JobCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA8F7213E992AC7E4E42314 /* JobCenter.swift */; };
+		9EDEBBCE2CFD46C445F75BBF /* FinderServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BFB751A8BA2498B100E503 /* FinderServices.swift */; };
+		A3F15A06B56FAA9355CC8DAE /* DropwheelCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7BF981E11A6D63E724D1D8BA /* DropwheelCore */; };
+		A7EB07BBBCA87C84B7B6EAFD /* WheelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D7934A0F6211BBDDDB53E5 /* WheelController.swift */; };
+		A9167AF841C63522FFA01D2E /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC957458F66F636E077D198 /* SettingsStore.swift */; };
+		AC7B34E299CC4030EF712B04 /* DebugHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91ADF422172149694426A5CE /* DebugHooks.swift */; };
+		AE3E9BC021E292BB5DD24105 /* ProgressPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0FCD1DBD2C290AD7407C8C /* ProgressPanel.swift */; };
+		BD9BFCF5630BB31A3EA04C04 /* PDFToolsUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB8854F4F0211DB96F4F31E /* PDFToolsUI.swift */; };
+		CDCDEB17BDC8EAD5EE78D79F /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07ED1888946B3919A6CB5B1A /* AppUpdater.swift */; };
+		DB9B0825B398CC340CE0A740 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = BB74A253526A9B7E0D9A67F8 /* Sparkle */; };
+		E4946FD6CC2F7F0BE249F130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03BB5A0469959167857913F7 /* Assets.xcassets */; };
+		E5B88D6F89D6BE27790CB8AD /* FloatShelf.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0D49A4B249055A78E43D1 /* FloatShelf.swift */; };
+		F122DAE680B85DDAEF21FE71 /* ImageTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151D230AF6959F846FB3D39E /* ImageTools.swift */; };
+		F709AAD824F7B5747D39D560 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EA3E70B433AFEDAF13B6DA /* Coordinator.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03BB5A0469959167857913F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0676730B2969DA896E13A8BC /* CommonTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTools.swift; sourceTree = "<group>"; };
+		07ED1888946B3919A6CB5B1A /* AppUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
+		0DC957458F66F636E077D198 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		12BFB751A8BA2498B100E503 /* FinderServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderServices.swift; sourceTree = "<group>"; };
+		151D230AF6959F846FB3D39E /* ImageTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTools.swift; sourceTree = "<group>"; };
+		293808EB4A7E549A032253E9 /* WheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelView.swift; sourceTree = "<group>"; };
+		2FB0BA8DB3E5C314A0821500 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3771D33EB8AB3FD768AFE81F /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
+		38EA3E70B433AFEDAF13B6DA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		3F408CD8B6A7448760805C24 /* MediaToolsUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaToolsUI.swift; sourceTree = "<group>"; };
+		40D7934A0F6211BBDDDB53E5 /* WheelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelController.swift; sourceTree = "<group>"; };
+		52B4DA2A060A4B994719CEAC /* ToolPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPresenter.swift; sourceTree = "<group>"; };
+		62408F05E3A9F2F606CD72BB /* DragWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragWatcher.swift; sourceTree = "<group>"; };
+		66F1B9BCBC73C01DE4E56982 /* Dropwheel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dropwheel.entitlements; sourceTree = "<group>"; };
+		6AA8F7213E992AC7E4E42314 /* JobCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCenter.swift; sourceTree = "<group>"; };
+		6F0FCD1DBD2C290AD7407C8C /* ProgressPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPanel.swift; sourceTree = "<group>"; };
+		75CE694AED04BE4A36778F39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7F6F3A956B95780FC6A618CA /* ToolChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolChrome.swift; sourceTree = "<group>"; };
+		91ADF422172149694426A5CE /* DebugHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugHooks.swift; sourceTree = "<group>"; };
+		9EB8854F4F0211DB96F4F31E /* PDFToolsUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFToolsUI.swift; sourceTree = "<group>"; };
+		ABB000F10E81129CB0FF8A3D /* Dropwheel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dropwheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B15971EE4AA81131D4E80BD9 /* DropwheelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropwheelApp.swift; sourceTree = "<group>"; };
+		BAF4774F2D82E70076893D8B /* WheelGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelGeometry.swift; sourceTree = "<group>"; };
+		C29CBEFB97259CCBC832BD87 /* FileActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileActions.swift; sourceTree = "<group>"; };
+		DBD0D49A4B249055A78E43D1 /* FloatShelf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatShelf.swift; sourceTree = "<group>"; };
+		FCFF76D9EFE8CA79B2ED5D0F /* DropwheelCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DropwheelCore; path = DropwheelCore; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B7434A9A00C9D2465EA370DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3F15A06B56FAA9355CC8DAE /* DropwheelCore in Frameworks */,
+				DB9B0825B398CC340CE0A740 /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		15909D002C511A2A9BC4D2D4 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				FCFF76D9EFE8CA79B2ED5D0F /* DropwheelCore */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		22584FA25322B9468DD43E64 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABB000F10E81129CB0FF8A3D /* Dropwheel.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		22645A8695A5ABE450A45BC4 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				07ED1888946B3919A6CB5B1A /* AppUpdater.swift */,
+				38EA3E70B433AFEDAF13B6DA /* Coordinator.swift */,
+				91ADF422172149694426A5CE /* DebugHooks.swift */,
+				B15971EE4AA81131D4E80BD9 /* DropwheelApp.swift */,
+				12BFB751A8BA2498B100E503 /* FinderServices.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		51F0180EE542C17EBDE425EC /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0DC957458F66F636E077D198 /* SettingsStore.swift */,
+				2FB0BA8DB3E5C314A0821500 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		585C049800AB4ACD1AAD23EF /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				C29CBEFB97259CCBC832BD87 /* FileActions.swift */,
+				DBD0D49A4B249055A78E43D1 /* FloatShelf.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		89FFCA0735727AC15558EE14 /* Jobs */ = {
+			isa = PBXGroup;
+			children = (
+				6AA8F7213E992AC7E4E42314 /* JobCenter.swift */,
+				6F0FCD1DBD2C290AD7407C8C /* ProgressPanel.swift */,
+			);
+			path = Jobs;
+			sourceTree = "<group>";
+		};
+		94C90067B124F6683304A72A /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				0676730B2969DA896E13A8BC /* CommonTools.swift */,
+				151D230AF6959F846FB3D39E /* ImageTools.swift */,
+				3F408CD8B6A7448760805C24 /* MediaToolsUI.swift */,
+				9EB8854F4F0211DB96F4F31E /* PDFToolsUI.swift */,
+				7F6F3A956B95780FC6A618CA /* ToolChrome.swift */,
+				52B4DA2A060A4B994719CEAC /* ToolPresenter.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		9C7A2F13B0E87CB941FF07F4 /* Wheel */ = {
+			isa = PBXGroup;
+			children = (
+				40D7934A0F6211BBDDDB53E5 /* WheelController.swift */,
+				BAF4774F2D82E70076893D8B /* WheelGeometry.swift */,
+				293808EB4A7E549A032253E9 /* WheelView.swift */,
+			);
+			path = Wheel;
+			sourceTree = "<group>";
+		};
+		B006EE7AE2AB95BB4A1FC385 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				3771D33EB8AB3FD768AFE81F /* Tokens.swift */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		BF963BD854F1B3DF251F223E /* Gesture */ = {
+			isa = PBXGroup;
+			children = (
+				62408F05E3A9F2F606CD72BB /* DragWatcher.swift */,
+			);
+			path = Gesture;
+			sourceTree = "<group>";
+		};
+		CA342C7C865C88458DEA8733 = {
+			isa = PBXGroup;
+			children = (
+				F58BFB01FD90900698D50902 /* Dropwheel */,
+				15909D002C511A2A9BC4D2D4 /* Packages */,
+				22584FA25322B9468DD43E64 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F58BFB01FD90900698D50902 /* Dropwheel */ = {
+			isa = PBXGroup;
+			children = (
+				03BB5A0469959167857913F7 /* Assets.xcassets */,
+				66F1B9BCBC73C01DE4E56982 /* Dropwheel.entitlements */,
+				75CE694AED04BE4A36778F39 /* Info.plist */,
+				585C049800AB4ACD1AAD23EF /* Actions */,
+				22645A8695A5ABE450A45BC4 /* App */,
+				B006EE7AE2AB95BB4A1FC385 /* Design */,
+				BF963BD854F1B3DF251F223E /* Gesture */,
+				89FFCA0735727AC15558EE14 /* Jobs */,
+				51F0180EE542C17EBDE425EC /* Settings */,
+				94C90067B124F6683304A72A /* Tools */,
+				9C7A2F13B0E87CB941FF07F4 /* Wheel */,
+			);
+			path = Dropwheel;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		59803331C63CEC675F52A930 /* Dropwheel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6FB0882E099282528EE58099 /* Build configuration list for PBXNativeTarget "Dropwheel" */;
+			buildPhases = (
+				9760AB76AD2390F0354196B0 /* Sources */,
+				BA30EDB4E37499F6CC2B7E68 /* Resources */,
+				B7434A9A00C9D2465EA370DA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dropwheel;
+			packageProductDependencies = (
+				7BF981E11A6D63E724D1D8BA /* DropwheelCore */,
+				BB74A253526A9B7E0D9A67F8 /* Sparkle */,
+			);
+			productName = Dropwheel;
+			productReference = ABB000F10E81129CB0FF8A3D /* Dropwheel.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C83AB6907F960EB921B7B524 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					59803331C63CEC675F52A930 = {
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 32D871CA288EF12F9E5D85EA /* Build configuration list for PBXProject "Dropwheel" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CA342C7C865C88458DEA8733;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D1799D5E024EDCAE5D6C65DC /* XCRemoteSwiftPackageReference "Sparkle" */,
+				6CC7D353BFFA84E51CAD7B39 /* XCLocalSwiftPackageReference "DropwheelCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 22584FA25322B9468DD43E64 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				59803331C63CEC675F52A930 /* Dropwheel */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BA30EDB4E37499F6CC2B7E68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4946FD6CC2F7F0BE249F130 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9760AB76AD2390F0354196B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDCDEB17BDC8EAD5EE78D79F /* AppUpdater.swift in Sources */,
+				6A492401B961A4D98F39763F /* CommonTools.swift in Sources */,
+				F709AAD824F7B5747D39D560 /* Coordinator.swift in Sources */,
+				AC7B34E299CC4030EF712B04 /* DebugHooks.swift in Sources */,
+				09A0EADEA92AD3C28377F554 /* DragWatcher.swift in Sources */,
+				56F154420F3D95323721E4E7 /* DropwheelApp.swift in Sources */,
+				273EC50EE27B26D09B5B363A /* FileActions.swift in Sources */,
+				9EDEBBCE2CFD46C445F75BBF /* FinderServices.swift in Sources */,
+				E5B88D6F89D6BE27790CB8AD /* FloatShelf.swift in Sources */,
+				F122DAE680B85DDAEF21FE71 /* ImageTools.swift in Sources */,
+				91FC6BE931CE1320FE4174D4 /* JobCenter.swift in Sources */,
+				72D68ED2BED6B8620DF18C85 /* MediaToolsUI.swift in Sources */,
+				BD9BFCF5630BB31A3EA04C04 /* PDFToolsUI.swift in Sources */,
+				AE3E9BC021E292BB5DD24105 /* ProgressPanel.swift in Sources */,
+				A9167AF841C63522FFA01D2E /* SettingsStore.swift in Sources */,
+				578D8E09A1A05EDCD387999B /* SettingsView.swift in Sources */,
+				8FE7756DAD6E6FC37087CD90 /* Tokens.swift in Sources */,
+				293DB8EFB1BABF55AECC0F2F /* ToolChrome.swift in Sources */,
+				4B57DDE08D88147B92C09097 /* ToolPresenter.swift in Sources */,
+				A7EB07BBBCA87C84B7B6EAFD /* WheelController.swift in Sources */,
+				19925BC9694132359FFD423E /* WheelGeometry.swift in Sources */,
+				29B1E6EF0C75664AF9C6DDCB /* WheelView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2BA35DC0391CFC36B73D9AA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Dropwheel/Dropwheel.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Dropwheel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.dropwheel.app;
+				PRODUCT_NAME = Dropwheel;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		40DC99169687F965BBC557A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 27G8CZPDWA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				OTHER_SWIFT_FLAGS = "-enable-upcoming-feature BareSlashRegexLiterals";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A6C35619C8D1973C02AFDAFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-enable-upcoming-feature BareSlashRegexLiterals";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		BF9283DA2CC543DF5D7DB350 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Dropwheel/Dropwheel.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Dropwheel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.dropwheel.app;
+				PRODUCT_NAME = Dropwheel;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		32D871CA288EF12F9E5D85EA /* Build configuration list for PBXProject "Dropwheel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6C35619C8D1973C02AFDAFF /* Debug */,
+				40DC99169687F965BBC557A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6FB0882E099282528EE58099 /* Build configuration list for PBXNativeTarget "Dropwheel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BA35DC0391CFC36B73D9AA3 /* Debug */,
+				BF9283DA2CC543DF5D7DB350 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		6CC7D353BFFA84E51CAD7B39 /* XCLocalSwiftPackageReference "DropwheelCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = DropwheelCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D1799D5E024EDCAE5D6C65DC /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7BF981E11A6D63E724D1D8BA /* DropwheelCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DropwheelCore;
+		};
+		BB74A253526A9B7E0D9A67F8 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1799D5E024EDCAE5D6C65DC /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = C83AB6907F960EB921B7B524 /* Project object */;
+}
